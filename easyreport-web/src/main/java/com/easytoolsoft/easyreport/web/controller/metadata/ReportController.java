@@ -22,10 +22,7 @@ import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -220,4 +217,17 @@ public class ReportController
                 .build();
     }
 
+
+    @PostMapping(value = "/listPeople")
+    @OpLog(name = "分页获取柜员列表")
+    @ResponseBody
+    public Map<String, Object> listPeople(DataGridPager pager, Integer id) {
+        id=711;
+        PageInfo pageInfo = this.getPageInfo(pager);
+        List<Report> list = this.service.getByPage(pageInfo, "t1.category_id", id == null ? 0 : id);
+        Map<String, Object> modelMap = new HashMap<>(2);
+        modelMap.put("total", pageInfo.getTotals());
+        modelMap.put("rows", list);
+        return modelMap;
+    }
 }

@@ -107,4 +107,17 @@ public class UserController
         this.service.editById(loginUser);
         return result;
     }
+
+    @GetMapping(value = "/listPeople")
+    @OpLog(name = "分页获取柜员列表")
+    @RequiresPermissions("membership.user:view")
+    public Map<String, Object> listPeople(@CurrentUser User loginUser, DataGridPager pager,
+                                    String fieldName, String keyword) {
+        PageInfo pageInfo = pager.toPageInfo();
+        List<User> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
+        Map<String, Object> modelMap = new HashMap<>(2);
+        modelMap.put("total", pageInfo.getTotals());
+        modelMap.put("rows", list);
+        return modelMap;
+    }
 }

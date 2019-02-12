@@ -21,7 +21,7 @@
 <body class="easyui-layout" id="body-layout">
 <!-- 左边报表分类tree -->
 <div id="west" data-options="region:'west',split:true" title="报表分类" style="width: 220px;">
-    <div class="easyui-panel" style="padding: 5px; border: none">
+   <div class="easyui-panel" style="padding: 5px; border: none">
         <ul id="category-tree"></ul>
         <input type="hidden" id="copyNodeId" name="copyNodeId" value="0"/>
         <input id="modal-action" type="hidden" name="action" value=""/>
