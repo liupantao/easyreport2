@@ -12,11 +12,21 @@
 
     <select id="selectByPager" resultMap="PeopleMap" parameterType="java.util.Map">
         select
-        id,name_ as name ,code_ as code
-        from t_teller_info_
+        a.id as id ,a.name_ as name ,a.code_ as code, a.org_code_ as orgCode,b.id_,b.full_name_ as fullName,b.short_name_ as shortName,
+        case
+        when a.type_ ='01' then '合同工A'
+        when a.type_ ='02' then '合同工B'
+        when a.type_ ='03' then '合同工C'
+        when a.type_ ='04' then '合同工D'
+        when a.type_ ='05' then '合同工E'
+        when a.type_ ='06' then '合同工F'
+        else '合同工G'
+        end as type
+
+        from t_teller_info_ a inner  join adm_agency_ b on a.ORG_CODE_=b.id_
 
         <if test="pager.sortItem != null and pager.sortItem != '' ">
-            order by ${pager.sortItem} ${pager.sortType}
+            order by a.id desc
         </if>
         limit #{pager.startIndex} , #{pager.pageSize}
     </select>

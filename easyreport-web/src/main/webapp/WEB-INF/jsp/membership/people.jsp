@@ -11,7 +11,7 @@
 <body class="easyui-layout">
 <div id="toolbar" class="toolbar">
     属性:<select class="easyui-combobox" id="field-name" name="fieldName" style="width: 100px">
-    <option value="code">柜员号</option>
+    <option value="account">账号</option>
     <option value="name">姓名</option>
 </select> 关键字:<input class="easyui-textbox" type="text" id="keyword" name="keyword"/>
     <a id="btn-search" href="#" class="easyui-linkbutton" iconCls="icon-search"> 搜索 </a>

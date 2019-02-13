@@ -12,7 +12,7 @@ var MembershipUser = {
 };
 
 var UserCommon = {
-    baseUrl: EasyReport.ctxPath + '/rest/membership/user/',
+    baseUrl: EasyReport.ctxPath + '/rest/membership/people/',
     baseRoleUrl: EasyReport.ctxPath + '/rest/membership/role/',
     baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/'
 };
@@ -58,32 +58,7 @@ var UserMVC = {
                 rownumbers: true,
                 pageSize: 50,
                 url: UserMVC.URLs.list.url,
-                toolbar: [{
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        UserMVC.Controller.add();
-                    }
-                }, '-', {
-                    iconCls: 'icon-edit1',
-                    handler: function () {
-                        UserMVC.Controller.edit();
-                    }
-                }, '-', {
-                    iconCls: 'icon-pwd',
-                    handler: function () {
-                        UserMVC.Controller.resetPwd();
-                    }
-                }, '-', {
-                    iconCls: 'icon-remove1',
-                    handler: function () {
-                        UserMVC.Controller.remove();
-                    }
-                }, '-', {
-                    iconCls: 'icon-reload',
-                    handler: function () {
-                        EasyUIUtils.reloadDatagrid('#user-datagrid');
-                    }
-                }],
+
                 loadFilter: function (src) {
                     if (src.success) {
                         return src.data;
@@ -91,57 +66,51 @@ var UserMVC = {
                     return $.messager.alert('失败', src.msg, 'error');
                 },
                 columns: [[{
-                    field: 'id',
-                    title: '用户ID',
-                    width: 50,
-                    sortable: true
-                }, {
-                    field: 'account',
-                    title: '账号',
+                    field: 'code',
+                    title: '柜员号',
                     width: 100,
                     sortable: true
                 }, {
                     field: 'name',
                     title: '姓名',
-                    width: 80,
+                    width: 100,
                     sortable: true,
                 }, {
-                    field: 'telephone',
-                    title: '电话',
-                    width: 50,
+                    field: 'orgCode',
+                    title: '机构号',
+                    width: 100,
                     sortable: true
                 }, {
-                    field: 'email',
-                    title: '邮箱',
-                    width: 80,
+                    field: 'shortName',
+                    title: '所在机构',
+                    width: 100,
                     sortable: true
                 }, {
+                    field: 'shortName',
+                    title: '机构简称',
+                    width: 100,
+                    sortable: true
+                }, {
+                    field: 'type',
+                    title: '人员类别',
+                    width: 100,
+                    sortable: true
+                },{
                     field: 'status',
                     title: '状态',
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value == 1 ? "启用" : "禁用";
+                        return value == 1  ? "启用" : "禁用";
                     }
-                }, {
-                    field: 'gmtCreated',
-                    title: '创建时间',
-                    width: 50,
-                    sortable: true
-                }, {
+                },{
                     field: 'options',
                     title: '操作',
                     width: 100,
                     formatter: function (value, row, index) {
                         var icons = [{
                             "name": "edit",
-                            "title": "编辑"
-                        }, {
-                            "name": "pwd",
-                            "title": "修改密码"
-                        }, {
-                            "name": "remove",
-                            "title": "删除"
+                            "title": "轨迹查看"
                         }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {

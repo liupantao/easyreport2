@@ -91,4 +91,7 @@ public class People<priva> implements Serializable {
     private String agencyLevel;
 
 
+    //
+    //机构名称
+    private String shortName;
 }
