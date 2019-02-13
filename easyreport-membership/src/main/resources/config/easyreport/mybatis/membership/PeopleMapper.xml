@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easytoolsoft.easyreport.membership.dao.IPeopleDao">
+    <!-- CodeBuilder  Generated-->
+    <resultMap id="PeopleMap" type="com.easytoolsoft.easyreport.membership.po.People">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="age" property="age" />
+
+
+</resultMap>
+
+    <select id="selectByPager" resultMap="PeopleMap" parameterType="java.util.Map">
+        select
+        id,name_ as name ,code_ as code
+        from t_teller_info_
+
+        <if test="pager.sortItem != null and pager.sortItem != '' ">
+            order by ${pager.sortItem} ${pager.sortType}
+        </if>
+        limit #{pager.startIndex} , #{pager.pageSize}
+    </select>
+
+
+    <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from  t_teller_info_
+
+    </select>
+</mapper>
