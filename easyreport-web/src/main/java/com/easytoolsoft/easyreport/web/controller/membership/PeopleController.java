@@ -16,13 +16,11 @@ import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author tomdeng
@@ -46,6 +44,27 @@ public class PeopleController
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
+
+        //this.
+        return modelMap;
+    }
+
+    @GetMapping(value = "/editOne")
+    @OpLog(name = "分页获取柜员列表")
+    @RequiresPermissions("membership.user:view")
+    @ResponseBody
+    public Map<String, Object> editOne(@CurrentUser User loginUser, DataGridPager pager,
+                                          String fieldName, String keyword) {
+
+        Map<String, Object> modelMap = new HashMap<>(2);
+        List<String> list= new ArrayList<>();
+        list.add("2017年9月9日，入职河南大学，就置于大三英语教师。");
+        list.add("2018年10月10日，升值加薪，就任教导处处长。");
+        list.add("2019年3月3日，离职，就任郑州大学.");
+
+        modelMap.put("total", "123");
+        modelMap.put("rows", "3434");
+        modelMap.put("list", list);
 
         //this.
         return modelMap;

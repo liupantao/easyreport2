@@ -23,6 +23,10 @@ var UserMVC = {
             url: UserCommon.baseUrl + 'add',
             method: 'POST'
         },
+        editOne: {
+            url: UserCommon.baseUrl + 'editOne',
+            method: 'GET'
+        },
         edit: {
             url: UserCommon.baseUrl + 'edit',
             method: 'POST'
@@ -137,8 +141,11 @@ var UserMVC = {
             $('#user-dlg').dialog({
                 closed: true,
                 modal: false,
-                width: 560,
-                height: 500,
+                width: window.screen.width - 350,
+                height: window.screen.height - 350,
+                maximizable: true,
+                minimizable: true,
+                maximized: true,
                 iconCls: 'icon-add',
                 buttons: [{
                     text: '关闭',
@@ -153,24 +160,7 @@ var UserMVC = {
                 }]
             });
 
-            $('#reset-pwd-dlg').dialog({
-                closed: true,
-                modal: false,
-                width: 560,
-                height: 250,
-                iconCls: 'icon-pwd',
-                buttons: [{
-                    text: '关闭',
-                    iconCls: 'icon-no',
-                    handler: function () {
-                        $("#reset-pwd-dlg").dialog('close');
-                    }
-                }, {
-                    text: '保存',
-                    iconCls: 'icon-save',
-                    handler: UserMVC.Controller.save
-                }]
-            });
+
         },
         bindEvent: function () {
             $('#btn-search').bind('click', UserMVC.Controller.find);
@@ -187,28 +177,43 @@ var UserMVC = {
             if (name == "edit") {
                 return UserMVC.Controller.edit();
             }
-            if (name == "remove") {
-                return UserMVC.Controller.remove();
-            }
-            if (name == "pwd") {
-                return UserMVC.Controller.resetPwd();
-            }
+
         },
-        add: function () {
-            var options = UserMVC.Util.getOptions();
-            options.title = '新增用户';
-            EasyUIUtils.openAddDlg(options);
-            UserMVC.Util.fillRoleCombox("add", []);
-            $('#status').combobox('setValue', "1");
-            $('#account').textbox('readonly', false);
-        },
+
         edit: function () {
+            debugger;
             var row = $('#user-datagrid').datagrid('getSelected');
             if (row) {
                 var options = UserMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = row;
-                options.title = '修改[' + options.data.name + ']用户';
+                options.title = '查看[' + options.data.name + ']用户';
+                var id=row.id;
+                //
+                $.ajax({
+                    url: UserMVC.URLs.editOne.url,
+                    data: {name: 'jenny'},
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                        debugger;
+                        console.log(res);
+                        if(res){
+                           var resData=res.data.list;
+                           var htm;
+                            for(j = 0,len=resData.length; j < len; j++) {
+                                debugger;
+                                var temp="<li><b></b><span>"+(j+1);
+                                temp=temp+"</span><a href=\"javascript:void(0)\">"+resData[j];
+                                temp=temp+"</a></li>";
+                               htm=htm+temp;
+                            };
+                            $("#timeLine").html(htm);
+                        }
+                    }
+                });
+
+                //
                 EasyUIUtils.openEditDlg(options);
                 $('#password').textbox('setValue', '');
                 $('#account').textbox('readonly', true);
@@ -217,64 +222,6 @@ var UserMVC = {
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
-        },
-        resetPwd: function () {
-            var row = $('#user-datagrid').datagrid('getSelected');
-            if (row) {
-                $('#reset-pwd-dlg').dialog('open').dialog('center');
-                $("#modal-action").val("resetPwd");
-                $("#reset-pwd-form").form('clear');
-                $("#reset-userId").val(row.userId);
-                $("#reset-account").text(row.account);
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
-        },
-        find: function () {
-            var fieldName = $("#field-name").combobox('getValue');
-            var keyword = $("#keyword").val();
-            var url = UserMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
-            EasyUIUtils.loadToDatagrid('#user-datagrid', url)
-        },
-        remove: function () {
-            var row = $('#user-datagrid').datagrid('getSelected');
-            if (row) {
-                var options = {
-                    rows: [row],
-                    url: UserMVC.URLs.remove.url,
-                    data: {
-                        id: row.id
-                    },
-                    gridId: '#user-datagrid',
-                    gridUrl: UserMVC.URLs.list.url,
-                    callback: function (rows) {
-                    }
-                };
-                EasyUIUtils.remove(options);
-            }
-        },
-        save: function () {
-            var action = $('#modal-action').val();
-            var options = {
-                gridId: null,
-                gridUrl: UserMVC.URLs.list.url,
-                dlgId: "#user-dlg",
-                formId: "#user-form",
-                url: null,
-                callback: function () {
-                }
-            };
-
-            if (action === "resetPwd") {
-                options.dlgId = '#reset-pwd-dlg';
-                options.formId = '#reset-pwd-form';
-                options.url = UserMVC.URLs.editPassword.url;
-            } else {
-                $('#roles').val($('#combox-roles').combobox('getValues'));
-                options.url = (action === "edit" ? UserMVC.URLs.edit.url : UserMVC.URLs.add.url);
-                options.gridId = '#user-datagrid';
-            }
-            return EasyUIUtils.save(options);
         }
     },
     Util: {
