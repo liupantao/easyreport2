@@ -2,13 +2,16 @@ package com.easytoolsoft.easyreport.web.controller.membership;
 
 import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
+import com.easytoolsoft.easyreport.membership.example.JobReplaceExample;
 import com.easytoolsoft.easyreport.membership.example.PeopleExample;
 import com.easytoolsoft.easyreport.membership.example.UserExample;
+import com.easytoolsoft.easyreport.membership.po.JobReplace;
 import com.easytoolsoft.easyreport.membership.po.People;
 import com.easytoolsoft.easyreport.membership.po.User;
 import com.easytoolsoft.easyreport.membership.security.PasswordService;
 import com.easytoolsoft.easyreport.membership.service.IPeopleService;
 import com.easytoolsoft.easyreport.membership.service.IUserService;
+import com.easytoolsoft.easyreport.membership.service.impl.JobReplaceService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
@@ -30,7 +33,9 @@ import java.util.*;
 public class PeopleController
         extends BaseController<IPeopleService, People, PeopleExample> {
 
-
+    @Resource
+    private  JobReplaceService jobReplaceService;
+     
 
 
 
@@ -44,8 +49,12 @@ public class PeopleController
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
-
+       // pageInfo.setPageSize(100);
+       // List<People> aa = this.service.getByPage(pageInfo, "a.id", "%" + 1 + "%");
         //this.
+       // Map<String,String> map= new HashMap<>();
+      //  map.put("sid","123");
+       // List<People> bb= this.service.getList(map);
         return modelMap;
     }
 
@@ -71,10 +80,17 @@ public class PeopleController
                 +people.getShortName();
         list.add(join);
 
-
+       // jobReplaceService.getByPage(pageInfo,"")
         list.add("2017年9月9日，入职河南大学，就置于大三英语教师。");
         list.add("2018年10月10日，升值加薪，就任教导处处长。");
         list.add("2019年3月3日，离职，就任郑州大学.");
+        PeopleExample p= new PeopleExample();
+        PageInfo pageInfo = pager.toPageInfo();
+        pageInfo.setPageSize(100);
+        List<People> id1 = this.service.getByPage(pageInfo, "id", id);
+
         return modelMap;
     }
+
+
 }

@@ -6,9 +6,46 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="age" property="age" />
+   </resultMap>
+
+    <sql id="Base_Column_List_Without_Id">
+  	    name  </sql>
+    <sql id="Base_Column_List">
+        id ,
+        <include refid="Base_Column_List_Without_Id"/>
+    </sql>
 
 
-</resultMap>
+    <sql id="Example_Where_Clause2">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
 
     <select id="selectByPager" resultMap="PeopleMap" parameterType="java.util.Map">
         select
@@ -24,10 +61,15 @@
         end as type
 
         from t_teller_info_ a inner  join adm_agency_ b on a.ORG_CODE_=b.id_
+        <if test="example != null">
+            <include refid="Example_Where_Clause2"/>
+        </if>
 
         <if test="pager.sortItem != null and pager.sortItem != '' ">
             order by a.id desc
         </if>
+
+
         limit #{pager.startIndex} , #{pager.pageSize}
     </select>
 
@@ -45,4 +87,11 @@
        from t_teller_info_ a inner  join adm_agency_ b on a.ORG_CODE_=b.id_
         where a.id = #{id}
     </select>
+
+    <select id="getList" resultType="com.easytoolsoft.easyreport.membership.po.People" parameterType="java.util.Map">
+        select a.id from  t_teller_info_ a
+        where a.id = #{sid}
+
+    </select>
+
 </mapper>

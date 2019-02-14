@@ -3,6 +3,7 @@ package com.easytoolsoft.easyreport.data.service;
 import com.easytoolsoft.easyreport.data.helper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author tomdeng
@@ -30,6 +31,8 @@ public interface IGetService<T, U> {
      */
     T getById(String id);
 
+    List<T> getList(Map<String,String> map);
+
     /**
      * 根据条件查询零条及多条数据
      *
@@ -37,6 +40,8 @@ public interface IGetService<T, U> {
      * @return 记录列表
      */
     List<T> getByExample(U example);
+
+
 
     /**
      * 根据条件查询所有记录

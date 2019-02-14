@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author tomdeng
@@ -31,6 +32,11 @@ public abstract class AbstractGetService<Dao extends ISelectDao<Po, Example>, Po
     @Override
     public Po getById(String id) {
         return this.dao.selectById(id);
+    }
+
+    @Override
+    public List<Po> getList(Map<String,String> map) {
+        return this.dao.getList(map);
     }
 
     @Override
