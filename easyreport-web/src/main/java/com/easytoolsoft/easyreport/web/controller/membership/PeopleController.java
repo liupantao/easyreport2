@@ -11,11 +11,13 @@ import com.easytoolsoft.easyreport.membership.po.User;
 import com.easytoolsoft.easyreport.membership.security.PasswordService;
 import com.easytoolsoft.easyreport.membership.service.IPeopleService;
 import com.easytoolsoft.easyreport.membership.service.IUserService;
+import com.easytoolsoft.easyreport.membership.service.IjobReplaceService;
 import com.easytoolsoft.easyreport.membership.service.impl.JobReplaceService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +36,7 @@ public class PeopleController
         extends BaseController<IPeopleService, People, PeopleExample> {
 
     @Resource
-    private  JobReplaceService jobReplaceService;
+    private IjobReplaceService jobReplaceService;
      
 
 
@@ -52,9 +54,12 @@ public class PeopleController
        // pageInfo.setPageSize(100);
        // List<People> aa = this.service.getByPage(pageInfo, "a.id", "%" + 1 + "%");
         //this.
-       // Map<String,String> map= new HashMap<>();
-      //  map.put("sid","123");
-       // List<People> bb= this.service.getList(map);
+       /*Map<String,String> map= new HashMap<>();
+       map.put("sid","123");
+       List<People> bb= this.service.getList(map);
+        System.out.println("---------");
+        List<JobReplace> list1 = jobReplaceService.getList(map);
+*/
         return modelMap;
     }
 
@@ -81,13 +86,32 @@ public class PeopleController
         list.add(join);
 
        // jobReplaceService.getByPage(pageInfo,"")
-        list.add("2017年9月9日，入职河南大学，就置于大三英语教师。");
+       /* list.add("2017年9月9日，入职河南大学，就置于大三英语教师。");
         list.add("2018年10月10日，升值加薪，就任教导处处长。");
-        list.add("2019年3月3日，离职，就任郑州大学.");
-        PeopleExample p= new PeopleExample();
+        list.add("2019年3月3日，离职，就任郑州大学.");*/
+       /* PeopleExample p= new PeopleExample();
         PageInfo pageInfo = pager.toPageInfo();
         pageInfo.setPageSize(100);
-        List<People> id1 = this.service.getByPage(pageInfo, "id", id);
+        List<People> id1 = this.service.getByPage(pageInfo, "id", id);*/
+
+        Map<String,String> map= new HashMap<>();
+        map.put("sid",id);
+
+        List<JobReplace> list1 = jobReplaceService.getList(map);
+
+        System.out.println(list1.size()+"----------------geshu --");
+
+        for (JobReplace job: list1) {
+            //20121024 16:31:02
+            String start=job.getStartTime();
+            String str1=start.substring(0,4)+"年"+start.substring(4,6)+"月"+start.substring(6,8)+"日"+",";
+            str1=str1+"在"+job.getShortName()+" 顶岗";
+            if(StringUtils.isNotBlank(job.getEndTime())){
+                String end=job.getEndTime();
+                str1=end.substring(0,4)+"年"+start.substring(4,6)+"月"+start.substring(6,8)+"结束";
+            }
+            list.add(str1);
+        }
 
         return modelMap;
     }

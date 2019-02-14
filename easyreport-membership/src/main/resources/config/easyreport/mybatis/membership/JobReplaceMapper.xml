@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.easytoolsoft.easyreport.membership.dao.IPeopleDao">
+<mapper namespace="com.easytoolsoft.easyreport.membership.dao.IJobReplaceDao">
     <!-- CodeBuilder  Generated-->
     <resultMap id="JobReplaceMap" type="com.easytoolsoft.easyreport.membership.po.JobReplace">
         <id column="id" property="id" />
@@ -11,6 +11,17 @@
 
 
 
+    <select id="getList" resultType="com.easytoolsoft.easyreport.membership.po.JobReplace" parameterType="java.util.Map">
+       select
+           a.id_ as id , a.start_time_ as starttime ,a.end_time_ as endtime ,b.short_name_ as  shortname
+          from t_job_replace_ a left join  adm_agency_  b  on a.agency_id_=b.id_
+
+       where a.teller_id_ = #{sid}  order by a.start_time_ asc
+
+
+
+
+    </select>
 
 
 

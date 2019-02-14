@@ -12,4 +12,5 @@ public class JobReplace<priva> implements Serializable {
     private String id;
     private String startTime;
     private String endTime;
+    private String shortName;
 }
