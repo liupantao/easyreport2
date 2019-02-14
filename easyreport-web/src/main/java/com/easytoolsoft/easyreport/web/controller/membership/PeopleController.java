@@ -2,17 +2,12 @@ package com.easytoolsoft.easyreport.web.controller.membership;
 
 import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
-import com.easytoolsoft.easyreport.membership.example.JobReplaceExample;
 import com.easytoolsoft.easyreport.membership.example.PeopleExample;
-import com.easytoolsoft.easyreport.membership.example.UserExample;
 import com.easytoolsoft.easyreport.membership.po.JobReplace;
 import com.easytoolsoft.easyreport.membership.po.People;
 import com.easytoolsoft.easyreport.membership.po.User;
-import com.easytoolsoft.easyreport.membership.security.PasswordService;
 import com.easytoolsoft.easyreport.membership.service.IPeopleService;
-import com.easytoolsoft.easyreport.membership.service.IUserService;
 import com.easytoolsoft.easyreport.membership.service.IjobReplaceService;
-import com.easytoolsoft.easyreport.membership.service.impl.JobReplaceService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
