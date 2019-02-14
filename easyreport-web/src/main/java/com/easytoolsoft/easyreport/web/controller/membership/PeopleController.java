@@ -105,10 +105,10 @@ public class PeopleController
             //20121024 16:31:02
             String start=job.getStartTime();
             String str1=start.substring(0,4)+"年"+start.substring(4,6)+"月"+start.substring(6,8)+"日"+",";
-            str1=str1+"在"+job.getShortName()+" 顶岗";
+            str1=str1+"在"+job.getShortName()+" 顶岗, ";
             if(StringUtils.isNotBlank(job.getEndTime())){
                 String end=job.getEndTime();
-                str1=end.substring(0,4)+"年"+start.substring(4,6)+"月"+start.substring(6,8)+"结束";
+                str1=str1+end.substring(0,4)+"年"+start.substring(4,6)+"月"+start.substring(6,8)+"结束";
             }
             list.add(str1);
         }
