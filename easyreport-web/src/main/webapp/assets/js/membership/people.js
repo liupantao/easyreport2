@@ -105,7 +105,7 @@ var UserMVC = {
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value == 1  ? "启用" : "禁用";
+                        return value == 1  ? "禁用" : "启用";
                     }
                 },{
                     field: 'options',
@@ -179,7 +179,12 @@ var UserMVC = {
             }
 
         },
-
+        find: function () {
+            var fieldName = $("#field-name").combobox('getValue');
+            var keyword = $("#keyword").val();
+            var url = UserMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
+            EasyUIUtils.loadToDatagrid('#user-datagrid', url)
+        },
         edit: function () {
             debugger;
             var row = $('#user-datagrid').datagrid('getSelected');

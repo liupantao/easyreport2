@@ -8,12 +8,7 @@
         <result column="age" property="age" />
    </resultMap>
 
-    <sql id="Base_Column_List_Without_Id">
-  	    name  </sql>
-    <sql id="Base_Column_List">
-        id ,
-        <include refid="Base_Column_List_Without_Id"/>
-    </sql>
+
 
 
     <sql id="Example_Where_Clause2">
@@ -46,6 +41,12 @@
             </foreach>
         </where>
     </sql>
+    <sql id="Base_Column_List_Without_Id">
+  	    a.name_  </sql>
+    <sql id="Base_Column_List">
+        a.id ,
+        <include refid="Base_Column_List_Without_Id"/>
+    </sql>
 
     <select id="selectByPager" resultMap="PeopleMap" parameterType="java.util.Map">
         select
@@ -75,7 +76,11 @@
 
 
     <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
-        select count(*) as total from  t_teller_info_
+        select count(*) as total from  t_teller_info_  a
+
+        <if test="example != null">
+            <include refid="Example_Where_Clause2"/>
+        </if>
 
     </select>
 
