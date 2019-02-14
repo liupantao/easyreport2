@@ -54,19 +54,27 @@ public class PeopleController
     @RequiresPermissions("membership.user:view")
     @ResponseBody
     public Map<String, Object> editOne(@CurrentUser User loginUser, DataGridPager pager,
-                                          String fieldName, String keyword) {
+                                          String fieldName, String keyword,String id) {
 
         Map<String, Object> modelMap = new HashMap<>(2);
         List<String> list= new ArrayList<>();
-        list.add("2017年9月9日，入职河南大学，就置于大三英语教师。");
-        list.add("2018年10月10日，升值加薪，就任教导处处长。");
-        list.add("2019年3月3日，离职，就任郑州大学.");
+
 
         modelMap.put("total", "123");
         modelMap.put("rows", "3434");
         modelMap.put("list", list);
+        //1.根据idhuoqu获取柜员信息
+       People people= this.service.getById(id);
+       String join="";
+        String[] split = people.getJoinDate().split("-");
+        join=split[0]+"年"+split[1]+"月"+split[2]+"日,"+people.getName()+"入职中国邮政银行--"
+                +people.getShortName();
+        list.add(join);
 
-        //this.
+
+        list.add("2017年9月9日，入职河南大学，就置于大三英语教师。");
+        list.add("2018年10月10日，升值加薪，就任教导处处长。");
+        list.add("2019年3月3日，离职，就任郑州大学.");
         return modelMap;
     }
 }

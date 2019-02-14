@@ -29,6 +29,11 @@ public abstract class AbstractGetService<Dao extends ISelectDao<Po, Example>, Po
     }
 
     @Override
+    public Po getById(String id) {
+        return this.dao.selectById(id);
+    }
+
+    @Override
     public List<Po> getByExample(Example example) {
         return this.dao.selectByExample(example);
     }

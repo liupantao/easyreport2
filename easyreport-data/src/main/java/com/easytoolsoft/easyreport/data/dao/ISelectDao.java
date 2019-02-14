@@ -19,6 +19,17 @@ public interface ISelectDao<T, U> {
      */
     T selectById(Integer id);
 
+
+    /**
+     * 通过主键找出一条数据
+     *
+     * @param id 主键id值
+     * @return
+     */
+    T selectById(String id);
+
+
+
     /**
      * 根据条件查询零条及多条数据
      *

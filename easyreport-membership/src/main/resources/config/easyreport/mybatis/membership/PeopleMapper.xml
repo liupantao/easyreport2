@@ -36,4 +36,13 @@
         select count(*) as total from  t_teller_info_
 
     </select>
+
+    <!-- select -->
+    <select id="selectById" resultMap="PeopleMap" parameterType="java.lang.String">
+        select
+                a.id as id ,a.name_ as name ,a.code_ as code, a.org_code_ as orgCode,b.id_,b.full_name_ as fullName,b.short_name_ as shortName,
+                a.join_date_ as joinDate ,a.REGISTER_DATE_  as registerDate
+       from t_teller_info_ a inner  join adm_agency_ b on a.ORG_CODE_=b.id_
+        where a.id = #{id}
+    </select>
 </mapper>

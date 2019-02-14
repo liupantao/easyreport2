@@ -90,7 +90,7 @@ public class People<priva> implements Serializable {
 
     private String agencyLevel;
 
-
+   private String joinDate;
     //
     //机构名称
     private String shortName;

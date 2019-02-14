@@ -23,6 +23,14 @@ public interface IGetService<T, U> {
     T getById(Integer id);
 
     /**
+     * 通过主键找出一条数据
+     *
+     * @param id 主键id值
+     * @return
+     */
+    T getById(String id);
+
+    /**
      * 根据条件查询零条及多条数据
      *
      * @param example 查询条件参数

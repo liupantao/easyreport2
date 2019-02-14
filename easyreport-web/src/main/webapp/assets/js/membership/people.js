@@ -190,9 +190,11 @@ var UserMVC = {
                 options.title = '查看[' + options.data.name + ']用户';
                 var id=row.id;
                 //
+                //
+                console.log(123);
                 $.ajax({
                     url: UserMVC.URLs.editOne.url,
-                    data: {name: 'jenny'},
+                    data: {id: id},
                     type: "GET",
                     dataType: "json",
                     success: function(res) {
@@ -200,7 +202,7 @@ var UserMVC = {
                         console.log(res);
                         if(res){
                            var resData=res.data.list;
-                           var htm;
+                           var htm="";
                             for(j = 0,len=resData.length; j < len; j++) {
                                 debugger;
                                 var temp="<li><b></b><span>"+(j+1);
