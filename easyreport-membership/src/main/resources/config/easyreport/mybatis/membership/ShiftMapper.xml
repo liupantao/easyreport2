@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easytoolsoft.easyreport.membership.dao.IShiftDao">
+    <!-- CodeBuilder  Generated-->
+    <resultMap id="ShiftMap" type="com.easytoolsoft.easyreport.membership.po.Shift">
+        <id column="id" property="id" />
+
+   </resultMap>
+
+
+
+
+
+    <select id="getList" resultType="com.easytoolsoft.easyreport.membership.po.Shift" parameterType="java.util.Map">
+      select a.id_ as id ,b.id as sid , c.short_name_ as  shortname ,a.EXEC_DATE_ as startTime ,a.COMPLETE_DATE_ as endTime from t_shift_detail_ a inner join t_teller_info_  b on a.TELLER_ID_ =b.id
+
+        left join  adm_agency_  c  on a.NEW_AGENCY_ID_=c.id_
+
+       where a.teller_id_ = #{sid}  order by a.EXEC_DATE_ asc
+
+
+
+
+    </select>
+
+
+
+</mapper>

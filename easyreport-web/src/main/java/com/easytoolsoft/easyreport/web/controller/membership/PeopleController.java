@@ -5,8 +5,10 @@ import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.example.PeopleExample;
 import com.easytoolsoft.easyreport.membership.po.JobReplace;
 import com.easytoolsoft.easyreport.membership.po.People;
+import com.easytoolsoft.easyreport.membership.po.Shift;
 import com.easytoolsoft.easyreport.membership.po.User;
 import com.easytoolsoft.easyreport.membership.service.IPeopleService;
+import com.easytoolsoft.easyreport.membership.service.IShiftService;
 import com.easytoolsoft.easyreport.membership.service.IjobReplaceService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
@@ -32,7 +34,9 @@ public class PeopleController
 
     @Resource
     private IjobReplaceService jobReplaceService;
-     
+
+    @Resource
+    private IShiftService shiftService;
 
 
 
@@ -107,7 +111,24 @@ public class PeopleController
             }
             list.add(str1);
         }
+       if(list1.size()<1){
+           //查询轮岗
+           List<Shift> list2 = shiftService.getList(map);
+           for (Shift s:list2) {
+               String start=s.getStartTime();
+               start=start.replaceAll("-","");
+               String str1=start.substring(0,4)+"年"+start.substring(4,6)+"月"+start.substring(6,8)+"日"+",";
+               str1=str1+"在"+s.getShortName()+" 轮岗, ";
+               if(StringUtils.isNotBlank(s.getEndTime())){
+                   String end=s.getEndTime();
+                   end.replaceAll("-","");
+                   str1=str1+end.substring(0,4)+"年"+start.substring(4,6)+"月"+start.substring(6,8)+"结束";
+               }
+               list.add(str1);
+           }
 
+
+       }
         return modelMap;
     }
 
