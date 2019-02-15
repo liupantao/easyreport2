@@ -180,9 +180,11 @@ var UserMVC = {
 
         },
         find: function () {
-            var fieldName = $("#field-name").combobox('getValue');
-            var keyword = $("#keyword").val();
-            var url = UserMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
+            var name = $("#name").val();
+            var code=$("#code").val();
+            var card=$("#card").val();
+            var orgCode=$("#orgCode").val();
+            var url = UserMVC.URLs.list.url + '?name=' + name + '&code='+code+ '&orgCode='+orgCode+ '&card='+card ;
             EasyUIUtils.loadToDatagrid('#user-datagrid', url)
         },
         edit: function () {

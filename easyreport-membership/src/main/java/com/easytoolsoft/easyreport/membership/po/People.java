@@ -94,4 +94,6 @@ public class People<priva> implements Serializable {
     //
     //机构名称
     private String shortName;
+
+    private Integer total;
 }

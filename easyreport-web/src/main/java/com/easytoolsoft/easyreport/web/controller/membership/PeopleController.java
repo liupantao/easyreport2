@@ -44,12 +44,12 @@ public class PeopleController
     @OpLog(name = "分页获取柜员列表")
     @RequiresPermissions("membership.user:view")
     public Map<String, Object> listPeople(@CurrentUser User loginUser, DataGridPager pager,
-                                    String fieldName, String keyword) {
+                                    String name, String code,String orgCode,String card) {
         PageInfo pageInfo = pager.toPageInfo();
-        List<People> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
+      //<People> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
-        modelMap.put("total", pageInfo.getTotals());
-        modelMap.put("rows", list);
+      //  modelMap.put("total", pageInfo.getTotals());
+       // modelMap.put("rows", list);
        // pageInfo.setPageSize(100);
        // List<People> aa = this.service.getByPage(pageInfo, "a.id", "%" + 1 + "%");
         //this.
@@ -59,6 +59,29 @@ public class PeopleController
         System.out.println("---------");
         List<JobReplace> list1 = jobReplaceService.getList(map);
 */
+       //分页重构
+        Map<String,Object> map= new HashMap<>();
+        map.put("sid","123");
+        map.put("startIndex",pageInfo.getStartIndex());
+        map.put("pageSize",pageInfo.getPageSize());
+     //   List<People> bb= this.service.getList(map);
+        if(StringUtils.isNotBlank(name)){
+            map.put("name",name.trim());
+        }
+        if(StringUtils.isNotBlank(code)){
+            map.put("code",code.trim());
+        }
+        if(StringUtils.isNotBlank(orgCode)){
+            map.put("orgCode",orgCode.trim());
+        }
+        if(StringUtils.isNotBlank(card)){
+            map.put("card",card.trim());
+        }
+
+        List<People> cc= this.service.getListPage(map);
+        People total= this.service.getListPageTotal(map);
+        modelMap.put("rows", cc);
+        modelMap.put("total", total.getTotal());
         return modelMap;
     }
 

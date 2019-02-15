@@ -54,10 +54,13 @@
 
 <body class="easyui-layout">
 <div id="toolbar" class="toolbar">
-    属性:<select class="easyui-combobox" id="field-name" name="fieldName" style="width: 100px">
-    <option value="a.code_">柜员号</option>
-    <option value="a.name_">姓名</option>
-</select> 关键字:<input class="easyui-textbox" type="text" id="keyword" name="keyword"/>
+
+
+
+    姓名: <input  name="name"  id="name"/>
+    柜员号:<input  name="code"  id="code"/>
+    机构号:<input  name="orgCode"  id="orgCode"/>
+    身份证号:<input  name="card"  id="card"/>
     <a id="btn-search" href="#" class="easyui-linkbutton" iconCls="icon-search"> 搜索 </a>
     <input id="modal-action" type="hidden" name="action" value=""/>
 </div>

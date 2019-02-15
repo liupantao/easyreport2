@@ -99,4 +99,48 @@
 
     </select>
 
+
+    <select id="getListPage" resultMap="PeopleMap" parameterType="java.util.Map">
+        select
+        a.id as id ,a.name_ as name ,a.code_ as code, a.org_code_ as orgCode,b.id_,b.full_name_ as fullName,b.short_name_ as shortName,
+        case
+        when a.type_ ='01' then '合同工A'
+        when a.type_ ='02' then '合同工B'
+        when a.type_ ='03' then '合同工C'
+        when a.type_ ='04' then '合同工D'
+        when a.type_ ='05' then '合同工E'
+        when a.type_ ='06' then '合同工F'
+        else '合同工G'
+        end as type
+
+        from t_teller_info_ a inner  join adm_agency_ b on a.ORG_CODE_=b.id_
+        where 1=1
+        <if test="code != null and code != '' ">
+            and a.code_ =#{code}
+        </if>
+        <if test="name != null and name != '' ">
+            and a.name_ =#{name}
+        </if>
+        <if test="orgCode != null and orgCode != '' ">
+            and a.org_code_ =#{orgCode}
+        </if>
+        <if test="card != null and card != '' ">
+            and a.id_card_ =#{card}
+        </if>
+        order by a.id desc
+        limit #{startIndex} , #{pageSize}
+    </select>
+
+    <select id="getListPageTotal" resultMap="PeopleMap" parameterType="java.util.Map">
+        select
+         count(1) as total
+
+        from t_teller_info_ a inner  join adm_agency_ b on a.ORG_CODE_=b.id_
+        where 1=1
+        <if test="code != null and code != '' ">
+            and a.code_ =#{code}
+        </if>
+        order by a.id desc
+
+    </select>
 </mapper>

@@ -32,6 +32,10 @@ public interface ISelectDao<T, U> {
 
     List<T> getList(Map<String,String> map);
 
+    List<T> getListPage(Map<String,Object> map);
+
+    T getListPageTotal(Map<String,Object> map);
+
     /**
      * 根据条件查询零条及多条数据
      *

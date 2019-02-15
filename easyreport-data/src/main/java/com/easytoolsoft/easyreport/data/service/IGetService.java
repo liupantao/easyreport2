@@ -31,8 +31,25 @@ public interface IGetService<T, U> {
      */
     T getById(String id);
 
+    /**
+     * 条件查询
+     * @param map
+     * @return
+     */
     List<T> getList(Map<String,String> map);
 
+    /**
+     * 分页
+     * @param map
+     * @return
+     */
+    List<T> getListPage(Map<String,Object> map);
+    /**
+     * 分页
+     * @param map
+     * @return
+     */
+    T getListPageTotal(Map<String,Object> map);
     /**
      * 根据条件查询零条及多条数据
      *

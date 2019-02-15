@@ -40,6 +40,16 @@ public abstract class AbstractGetService<Dao extends ISelectDao<Po, Example>, Po
     }
 
     @Override
+    public List<Po> getListPage(Map<String,Object> map) {
+        return this.dao.getListPage(map);
+    }
+
+    @Override
+    public Po getListPageTotal(Map<String,Object> map) {
+        return this.dao.getListPageTotal(map);
+    }
+
+    @Override
     public List<Po> getByExample(Example example) {
         return this.dao.selectByExample(example);
     }
